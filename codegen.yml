@@ -1,0 +1,11 @@
+schema: 
+  - ./githubSchema.graphql
+documents: ./graphql/**/*.graphql
+generates:
+  ./src/graphqlSDK.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-graphql-request
+    config:
+      rawRequest: true

@@ -1,0 +1,7 @@
+query getTotalPullRequests($name: String!, $owner: String!) {
+	repository(name: $name, owner: $owner) {
+		pullRequests {
+			totalCount
+		}
+	}
+}
