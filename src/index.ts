@@ -1,18 +1,14 @@
-import { GraphQLClient } from "graphql-request";
-import { getSdk } from "./graphqlSDK";
 import dotenv from "dotenv-safe";
-
 dotenv.config();
+import express from "express";
+import router from "./api/index";
+import { client } from "./client";
+
+const PORT = process.env.PORT || 3000;
+
+const app = express();
 
 const main = async () => {
-	const _client = new GraphQLClient("https://api.github.com/graphql", {
-		headers: {
-			Authorization: "Bearer " + process.env.TOKEN,
-		},
-	});
-
-	const client = getSdk(_client);
-
 	console.log(
 		await client
 			.getTotalPullRequests({
@@ -20,6 +16,12 @@ const main = async () => {
 				owner: "anuraghazra",
 			})
 			.then(res => res.data?.repository?.pullRequests)
+	);
+
+	app.use("/api", router);
+
+	app.listen(PORT, () =>
+		console.log(`Server listening on localhost:${PORT}`)
 	);
 };
 
